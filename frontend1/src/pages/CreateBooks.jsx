@@ -15,14 +15,23 @@ const CreateBooks = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) {
-      console.log("You aren't permitted to perform this action");
-      navigate("/login");
-    }
+    // if (!token) {
+    //   console.log("You aren't permitted to perform this action");
+    //   navigate("/login");
+    // }
 
-    axios.post("http://localhost:5555/checkAuth", token).then((response) => {
-      console.log(response);
-    });
+    axios
+      .post("http://localhost:5555/checkAuth", { token })
+      .then((response) => {
+        //console.log(response);
+        if (response.status === 200) {
+          console.log("user authenticated");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        navigate("/login");
+      });
   });
 
   const handleSaveBook = () => {
