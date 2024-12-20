@@ -108,12 +108,19 @@ router.delete("/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const result = await Book.findByIdAndDelete(id);
+    const token = request.headers.token;
+    const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
 
-    if (!result) {
-      return response.status(404).json({ message: "Book not found" });
+    const book = await Book.findById(id);
+    // console.log(book.createdBy.toString());
+    if (book.createdBy.toString() === userId) {
+      const result = await Book.findByIdAndDelete(id);
+      console.log("Book deleted!");
+    } else {
+      const error = new Error();
+      error.message = "Unauthorized to delete book!";
+      throw error;
     }
-
     return response.status(200).send({ message: "Book deleted successfully" });
   } catch (error) {
     console.log(error.message);
