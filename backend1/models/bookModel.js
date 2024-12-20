@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { isObjectIdOrHexString } from "mongoose";
 
 const bookSchema = mongoose.Schema(
   {
@@ -14,10 +14,14 @@ const bookSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
   {
     timestamps: true,
   }
 );
 
-export const Book = mongoose.model('Book', bookSchema);
+export const Book = mongoose.model("Book", bookSchema);

@@ -2,12 +2,16 @@ import express from "express";
 import { Book } from "../models/bookModel.js";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
 // Route for Save a new Book
 router.post("/", async (request, response) => {
   try {
+    const token = request.headers.token;
+    const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
+
     if (
       !request.body.title ||
       !request.body.author ||
@@ -21,6 +25,7 @@ router.post("/", async (request, response) => {
       title: request.body.title,
       author: request.body.author,
       publishYear: request.body.publishYear,
+      createdBy: new mongoose.Types.ObjectId(userId),
     };
 
     const book = await Book.create(newBook);
