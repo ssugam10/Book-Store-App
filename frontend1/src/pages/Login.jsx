@@ -31,7 +31,7 @@ const Login = () => {
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
         enqueueSnackbar("Login successful!", { variant: "success" });
-        navigate("/"); // Adjust the route as needed
+        navigate("/Home"); // Adjust the route as needed
       }
     } catch (error) {
       setLoading(false);
@@ -73,6 +73,20 @@ const Login = () => {
         >
           {loading ? "Logging in..." : "Login"}
         </button>
+
+{/* signup option */}
+        <div className="text-center mt-4">
+          <p className="text-sm">
+            Create a account?{" "}
+            <span
+              onClick={() => navigate("/signup")}
+              className="text-blue-600 cursor-pointer hover:underline"
+            >
+              Sign Up
+            </span>
+          </p>
+        </div>
+
       </form>
     </div>
   );

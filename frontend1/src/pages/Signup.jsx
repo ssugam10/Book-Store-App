@@ -100,6 +100,20 @@ const Signup = () => {
         >
           {loading ? "Signing up..." : "Sign Up"}
         </button>
+
+{/* // login option */}
+        <div className="text-center mt-4">
+          <p className="text-sm">
+            Already a user?{" "}
+            <span
+              onClick={() => navigate("/login")}
+              className="text-blue-600 cursor-pointer hover:underline"
+            >
+              Log in
+            </span>
+          </p>
+        </div>
+
       </form>
     </div>
   );

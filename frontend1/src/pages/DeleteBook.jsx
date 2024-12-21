@@ -16,7 +16,7 @@ const DeleteBook = () => {
     axios
       .delete(`http://localhost:5555/books/${id}`, {
         headers: {
-          token: localStorage.getItem("token"),
+          token: localStorage.getItem("token"),  // extra added 
         },
       })
       .then((data) => {
