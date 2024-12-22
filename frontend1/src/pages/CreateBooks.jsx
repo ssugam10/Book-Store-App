@@ -11,6 +11,8 @@ const CreateBooks = () => {
   const [publishYear, setPublishYear] = useState("");
   const [genre,setGenre]=useState("");
   const [price,setPrice]=useState(0);
+  const [description,setDescription]=useState("");
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -43,6 +45,7 @@ const CreateBooks = () => {
       publishYear,
       genre,
       price,
+      description,
     };
     setLoading(true);
     axios
@@ -97,15 +100,7 @@ const CreateBooks = () => {
             className="border-2 border-gray-500 px-4 py-2  w-full "
           />
         </div>
-        {/* <div className="my-4">
-          <label className="text-xl mr-4 text-gray-500">Genre</label>
-          <input
-            type="text"
-            value={genre}
-            onChange={(e) => setGenre(e.target.value)}
-            className="border-2 border-gray-500 px-4 py-2  w-full "
-          />
-        </div> */}
+    
         <div className="my-4">
   <label className="text-xl mr-4 text-gray-500">Genre</label>
   <select
@@ -133,6 +128,15 @@ const CreateBooks = () => {
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            className="border-2 border-gray-500 px-4 py-2  w-full "
+          />
+        </div>
+        <div className="my-4">
+          <label className="text-xl mr-4 text-gray-500">Description</label>
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             className="border-2 border-gray-500 px-4 py-2  w-full "
           />
         </div>
