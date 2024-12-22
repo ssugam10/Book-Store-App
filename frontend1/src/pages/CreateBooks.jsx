@@ -9,6 +9,8 @@ const CreateBooks = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publishYear, setPublishYear] = useState("");
+  const [genre,setGenre]=useState("");
+  const [price,setPrice]=useState(0);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -39,6 +41,8 @@ const CreateBooks = () => {
       title,
       author,
       publishYear,
+      genre,
+      price,
     };
     setLoading(true);
     axios
@@ -50,7 +54,7 @@ const CreateBooks = () => {
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Book Created successfully", { variant: "success" });
-        navigate("/");
+        navigate("/Home");
       })
       .catch((error) => {
         setLoading(false);
@@ -90,6 +94,45 @@ const CreateBooks = () => {
             type="number"
             value={publishYear}
             onChange={(e) => setPublishYear(e.target.value)}
+            className="border-2 border-gray-500 px-4 py-2  w-full "
+          />
+        </div>
+        {/* <div className="my-4">
+          <label className="text-xl mr-4 text-gray-500">Genre</label>
+          <input
+            type="text"
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
+            className="border-2 border-gray-500 px-4 py-2  w-full "
+          />
+        </div> */}
+        <div className="my-4">
+  <label className="text-xl mr-4 text-gray-500">Genre</label>
+  <select
+    value={genre}
+    onChange={(e) => setGenre(e.target.value)}
+    className="border-2 border-gray-500 px-4 py-2 w-full"
+  >
+    <option value="">Select Genre</option>
+    <option value="Fiction">Fiction</option>
+    <option value="Non-Fiction">Non-Fiction</option>
+    <option value="Mystery">Mystery</option>
+    <option value="Fantasy">Fantasy</option>
+    <option value="Romance">Romance</option>
+    <option value="Science Fiction">Science Fiction</option>
+    <option value="Horror">Horror</option>
+    <option value="Biography">Biography</option>
+    <option value="Self-Help">Self-Help</option>
+    <option value="Historical">Historical</option>
+  </select>
+</div>
+
+        <div className="my-4">
+          <label className="text-xl mr-4 text-gray-500">Price</label>
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
             className="border-2 border-gray-500 px-4 py-2  w-full "
           />
         </div>

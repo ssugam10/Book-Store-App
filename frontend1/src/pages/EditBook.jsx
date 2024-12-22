@@ -4,11 +4,14 @@ import Spinner from "../components/Spinner";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
+import { use } from "react";
 
 const EditBook = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publishYear, setPublishYear] = useState("");
+  const [genre,setGenre]=useState('');
+  const [price,setPrice]=useState(0);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -23,6 +26,8 @@ const EditBook = () => {
         setAuthor(response.data.author);
         setPublishYear(response.data.publishYear);
         setTitle(response.data.title);
+        setGenre(response.data.genre);
+        setPrice(response.data.price);
         setLoading(false);
       })
       .catch((error) => {
@@ -41,6 +46,8 @@ const EditBook = () => {
       title,
       author,
       publishYear,
+      genre,
+      price
     };
     setLoading(true);
     axios
@@ -52,14 +59,14 @@ const EditBook = () => {
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Book Edited successfully", { variant: "success" });
-        navigate("/");
+        navigate("/Home");
       })
       .catch((error) => {
         setLoading(false);
         // alert('An error happened. Please Chack console');
         enqueueSnackbar("Error", { variant: "error" });
         console.log(error);
-        navigate("/login");
+        navigate("/Home");
       });
   };
 
@@ -96,6 +103,25 @@ const EditBook = () => {
             className="border-2 border-gray-500 px-4 py-2  w-full "
           />
         </div>
+        <div className="my-4">
+          <label className="text-xl mr-4 text-gray-500">Genre</label>
+          <input
+            type="text"
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
+            className="border-2 border-gray-500 px-4 py-2  w-full "
+          />
+        </div>
+        <div className="my-4">
+          <label className="text-xl mr-4 text-gray-500">Price</label>
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className="border-2 border-gray-500 px-4 py-2  w-full "
+          />
+        </div>
+        
         <button className="p-2 bg-sky-300 m-8" onClick={handleEditBook}>
           Save
         </button>

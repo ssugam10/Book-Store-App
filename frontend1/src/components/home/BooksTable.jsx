@@ -1,3 +1,4 @@
+//made chnages-for genre and price
 import { Link } from 'react-router-dom';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsInfoCircle } from 'react-icons/bs';
@@ -16,6 +17,12 @@ const BooksTable = ({ books }) => {
           <th className='border border-slate-600 rounded-md max-md:hidden'>
             Publish Year
           </th>
+          <th className='border border-slate-600 rounded-md max-md:hidden'>
+            Genre
+          </th>
+          <th className='border border-slate-600 rounded-md max-md:hidden'>
+           price
+          </th>
           <th className='border border-slate-600 rounded-md'>Operations</th>
         </tr>
       </thead>
@@ -33,6 +40,12 @@ const BooksTable = ({ books }) => {
             </td>
             <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
               {book.publishYear}
+            </td>
+            <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
+              {book.genre}
+            </td>
+            <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
+              {book.price}
             </td>
             <td className='border border-slate-700 rounded-md text-center'>
               <div className='flex justify-center gap-x-4'>

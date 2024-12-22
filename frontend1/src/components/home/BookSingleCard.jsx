@@ -1,3 +1,4 @@
+//made chnages-for genre and price
 import { Link } from 'react-router-dom';
 import { PiBookOpenTextLight } from 'react-icons/pi';
 import { BiUserCircle, BiShow } from 'react-icons/bi';
@@ -23,6 +24,14 @@ const BookSingleCard = ({ book }) => {
       <div className='flex justify-start items-center gap-x-2'>
         <BiUserCircle className='text-red-300 text-2xl' />
         <h2 className='my-1'>{book.author}</h2>
+      </div>
+      <div className='flex justify-start items-center gap-x-2'>
+        <BiUserCircle className='text-red-300 text-2xl' />
+        <h2 className='my-1'>{book.genre}</h2>
+      </div>
+      <div className='flex justify-start items-center gap-x-2'>
+        <BiUserCircle className='text-red-300 text-2xl' />
+        <h2 className='my-1'>{book.price}</h2>
       </div>
       <div className='flex justify-between items-center gap-x-2 mt-4 p-4'>
         <BiShow

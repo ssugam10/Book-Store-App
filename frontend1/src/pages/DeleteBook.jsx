@@ -23,7 +23,7 @@ const DeleteBook = () => {
         setLoading(false);
         console.log(data.data.message);
         enqueueSnackbar("Book Deleted successfully", { variant: "success" });
-        navigate("/");
+        navigate("/Home");
       })
       .catch((error) => {
         setLoading(false);

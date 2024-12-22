@@ -1,3 +1,4 @@
+//made chnages-for genre and price
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -46,6 +47,14 @@ const ShowBook = () => {
           <div className='my-4'>
             <span className='text-xl mr-4 text-gray-500'>Publish Year</span>
             <span>{book.publishYear}</span>
+          </div>
+          <div className='my-4'>
+            <span className='text-xl mr-4 text-gray-500'>Genre</span>
+            <span>{book.genre}</span>
+          </div>
+          <div className='my-4'>
+            <span className='text-xl mr-4 text-gray-500'>Price</span>
+            <span>{book.price}</span>
           </div>
           <div className='my-4'>
             <span className='text-xl mr-4 text-gray-500'>Create Time</span>

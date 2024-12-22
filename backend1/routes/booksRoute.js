@@ -15,10 +15,13 @@ router.post("/", async (request, response) => {
     if (
       !request.body.title ||
       !request.body.author ||
-      !request.body.publishYear
+      !request.body.publishYear ||
+      !request.body.genre||
+      !request.body.price
+
     ) {
       return response.status(400).send({
-        message: "Send all required fields: title, author, publishYear",
+        message: "Send all required fields: title, author, publishYear,genre and price",
       });
     }
     const newBook = {
@@ -26,6 +29,8 @@ router.post("/", async (request, response) => {
       author: request.body.author,
       publishYear: request.body.publishYear,
       createdBy: new mongoose.Types.ObjectId(userId),
+      genre: request.body.genre,
+      price:request.body.price
     };
 
     const book = await Book.create(newBook);
@@ -82,10 +87,12 @@ router.put("/:id", async (request, response) => {
     if (
       !request.body.title ||
       !request.body.author ||
-      !request.body.publishYear
+      !request.body.publishYear || 
+      !request.body.genre ||
+      !request.body.description 
     ) {
       return response.status(400).send({
-        message: "Send all required fields: title, author, publishYear",
+        message: "Send all required fields: title, author, publishYear,genre and price",
       });
     }
 
@@ -117,7 +124,8 @@ router.delete("/:id", async (request, response) => {
     if (book.createdBy.toString() === userId) {
       const result = await Book.findByIdAndDelete(id);
       console.log("Book deleted!");
-    } else {
+    } 
+    else {
       const error = new Error();
       error.message = "Unauthorized to delete book!";
       throw error;
