@@ -18,15 +18,14 @@ const bookSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
     },
-    genre:{
+    genre: {
       type: String,
-      required:true,
+      required: true,
     },
-    price:{
-      type:Number,
-      required:true,
-
-    }
+    price: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,
