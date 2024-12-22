@@ -9,9 +9,9 @@ const CreateBooks = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publishYear, setPublishYear] = useState("");
-  const [genre,setGenre]=useState("");
-  const [price,setPrice]=useState(0);
-  const [description,setDescription]=useState("");
+  const [genre, setGenre] = useState("");
+  const [price, setPrice] = useState(0);
+  const [description, setDescription] = useState("");
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const CreateBooks = () => {
       .then((response) => {
         //console.log(response);
         if (response.status === 200) {
-          console.log("user authenticated");
+          //console.log("user authenticated");
         }
       })
       .catch((err) => {
@@ -63,7 +63,7 @@ const CreateBooks = () => {
         setLoading(false);
         // alert('An error happened. Please Chack console');
         enqueueSnackbar("Error", { variant: "error" });
-        console.log(error);
+        console.log(error.response.data.message);
       });
   };
 
@@ -100,27 +100,27 @@ const CreateBooks = () => {
             className="border-2 border-gray-500 px-4 py-2  w-full "
           />
         </div>
-    
+
         <div className="my-4">
-  <label className="text-xl mr-4 text-gray-500">Genre</label>
-  <select
-    value={genre}
-    onChange={(e) => setGenre(e.target.value)}
-    className="border-2 border-gray-500 px-4 py-2 w-full"
-  >
-    <option value="">Select Genre</option>
-    <option value="Fiction">Fiction</option>
-    <option value="Non-Fiction">Non-Fiction</option>
-    <option value="Mystery">Mystery</option>
-    <option value="Fantasy">Fantasy</option>
-    <option value="Romance">Romance</option>
-    <option value="Science Fiction">Science Fiction</option>
-    <option value="Horror">Horror</option>
-    <option value="Biography">Biography</option>
-    <option value="Self-Help">Self-Help</option>
-    <option value="Historical">Historical</option>
-  </select>
-</div>
+          <label className="text-xl mr-4 text-gray-500">Genre</label>
+          <select
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
+            className="border-2 border-gray-500 px-4 py-2 w-full"
+          >
+            <option value="">Select Genre</option>
+            <option value="Fiction">Fiction</option>
+            <option value="Non-Fiction">Non-Fiction</option>
+            <option value="Mystery">Mystery</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Romance">Romance</option>
+            <option value="Science Fiction">Science Fiction</option>
+            <option value="Horror">Horror</option>
+            <option value="Biography">Biography</option>
+            <option value="Self-Help">Self-Help</option>
+            <option value="Historical">Historical</option>
+          </select>
+        </div>
 
         <div className="my-4">
           <label className="text-xl mr-4 text-gray-500">Price</label>

@@ -10,7 +10,13 @@ const router = express.Router();
 router.post("/", async (request, response) => {
   try {
     const token = request.headers.token;
-    const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
+    const { userId, role } = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!role) {
+      const error = new Error();
+      error.message = "Unauthorized to create book!";
+      throw error;
+    }
 
     if (
       !request.body.title ||
