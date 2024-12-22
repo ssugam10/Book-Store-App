@@ -16,12 +16,12 @@ router.post("/", async (request, response) => {
       !request.body.title ||
       !request.body.author ||
       !request.body.publishYear ||
-      !request.body.genre||
+      !request.body.genre ||
       !request.body.price
-
     ) {
       return response.status(400).send({
-        message: "Send all required fields: title, author, publishYear,genre and price",
+        message:
+          "Send all required fields: title, author, publishYear,genre and price",
       });
     }
     const newBook = {
@@ -30,14 +30,13 @@ router.post("/", async (request, response) => {
       publishYear: request.body.publishYear,
       createdBy: new mongoose.Types.ObjectId(userId),
       genre: request.body.genre,
-      price:request.body.price
+      price: request.body.price,
     };
 
     const book = await Book.create(newBook);
 
     return response.status(201).send(book);
-  }
-   catch (error) {
+  } catch (error) {
     console.log(error.message);
     response.status(500).send({ message: error.message });
   }
@@ -76,23 +75,26 @@ router.get("/:id", async (request, response) => {
 router.put("/:id", async (request, response) => {
   try {
     const token = request.headers.token;
-    console.log(token);
+    //console.log(token);
 
     const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
-    console.log(userId);
+    //console.log(userId);
 
     const user = await User.findById(userId);
-    console.log(user);
+    //console.log(user);
+
+    //console.log(request.body);
 
     if (
       !request.body.title ||
       !request.body.author ||
-      !request.body.publishYear || 
+      !request.body.publishYear ||
       !request.body.genre ||
-      !request.body.description 
+      !request.body.price
     ) {
       return response.status(400).send({
-        message: "Send all required fields: title, author, publishYear,genre and price",
+        message:
+          "Send all required fields: title, author, publishYear,genre and price",
       });
     }
 
@@ -124,8 +126,7 @@ router.delete("/:id", async (request, response) => {
     if (book.createdBy.toString() === userId) {
       const result = await Book.findByIdAndDelete(id);
       console.log("Book deleted!");
-    } 
-    else {
+    } else {
       const error = new Error();
       error.message = "Unauthorized to delete book!";
       throw error;
