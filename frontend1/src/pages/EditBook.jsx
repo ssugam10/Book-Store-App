@@ -13,6 +13,7 @@ const EditBook = () => {
   const [genre,setGenre]=useState('');
   const [price,setPrice]=useState(0);
   const [loading, setLoading] = useState(false);
+  const [description,setDescription]=useState("");
   const navigate = useNavigate();
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
@@ -28,6 +29,8 @@ const EditBook = () => {
         setTitle(response.data.title);
         setGenre(response.data.genre);
         setPrice(response.data.price);
+        setDescription(response.data.description);
+        
         setLoading(false);
       })
       .catch((error) => {
@@ -47,7 +50,8 @@ const EditBook = () => {
       author,
       publishYear,
       genre,
-      price
+      price,
+      description
     };
     setLoading(true);
     axios
@@ -118,6 +122,15 @@ const EditBook = () => {
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            className="border-2 border-gray-500 px-4 py-2  w-full "
+          />
+        </div>
+        <div className="my-4">
+          <label className="text-xl mr-4 text-gray-500">Description</label>
+          <input
+            type="text"
+            value={price}
+            onChange={(e) => setDescription(e.target.value)}
             className="border-2 border-gray-500 px-4 py-2  w-full "
           />
         </div>

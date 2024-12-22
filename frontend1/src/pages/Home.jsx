@@ -102,18 +102,21 @@ const Home = () => {
     <div className='p-4'>
       <div className='flex justify-between items-center'>
         <div className='flex justify-center items-center gap-x-4'>
-          <button
+          {/*............................................. remove card type of showcase of book */}
+
+          {/* <button
             className='bg-sky-300 hover:bg-sky-600 px-4 py-1 rounded-lg'
             onClick={() => setShowType('table')}
           >
             Table
-          </button>
-          <button
+          </button> */}
+          {/* <button
             className='bg-sky-300 hover:bg-sky-600 px-4 py-1 rounded-lg'
             onClick={() => setShowType('card')}
           >
             Card
-          </button>
+          </button> */}
+
         </div>
         <button
           className='bg-red-500 hover:bg-red-700 text-white px-4 py-1 rounded-lg'
