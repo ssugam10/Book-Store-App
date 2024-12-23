@@ -30,12 +30,18 @@ const Landing = () => {
       {/* Hero Section */}
       <div
         className="flex-grow flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('https://via.placeholder.com/1200x600?text=Library+Management')" }}
+        style={{
+          backgroundImage:
+            "url('https://via.placeholder.com/1200x600?text=Library+Management')",
+        }}
       >
         <div className="bg-white bg-opacity-80 p-8 rounded-lg shadow-md text-center">
-          <h1 className="text-5xl font-bold mb-4 text-sky-600">Welcome to BookManager</h1>
+          <h1 className="text-5xl font-bold mb-4 text-sky-600">
+            Welcome to BookManager
+          </h1>
           <p className="text-lg text-gray-600 mb-8">
-            Manage your library efficiently with BookManager. Keep track of all your books easily.
+            Manage your library efficiently with BookManager. Keep track of all
+            your books easily.
           </p>
           <div className="space-x-4">
             <button
@@ -49,6 +55,13 @@ const Landing = () => {
               onClick={() => navigate("/signup")}
             >
               Signup
+            </button>
+
+            <button
+              className="py-2 px-4 bg-gray-200 text-sky-600 rounded hover:bg-gray-300"
+              onClick={() => navigate("/Home")}
+            >
+              Homepage
             </button>
           </div>
         </div>

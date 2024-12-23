@@ -16,7 +16,7 @@ const DeleteBook = () => {
     axios
       .delete(`http://localhost:5555/books/${id}`, {
         headers: {
-          token: localStorage.getItem("token"),  // extra added 
+          token: localStorage.getItem("token"), // extra added
         },
       })
       .then((data) => {
@@ -29,8 +29,8 @@ const DeleteBook = () => {
         setLoading(false);
         // alert('An error happened. Please Chack console');
         enqueueSnackbar("Error", { variant: "error" });
-        console.log(error.message);
-        navigate("/");
+        console.log(error.response.data.message);
+        navigate("/Home");
       });
   };
 

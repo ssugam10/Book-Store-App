@@ -6,10 +6,7 @@ import cors from "cors";
 import booksRoute from "./routes/booksRoute.js";
 import signupRoutes from "./routes/signupRoute.js";
 import loginRoutes from "./routes/loginRoute.js";
-import checkAuth from "./checkAuth.js";
 
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -38,7 +35,6 @@ app.get("/", (request, response) => {
 app.use("/books", booksRoute);
 app.use("/signup", signupRoutes);
 app.use("/login", loginRoutes);
-app.use("/checkAuth", checkAuth);
 
 mongoose
   .connect(mongoDBURL)

@@ -10,9 +10,9 @@ const router = express.Router();
 router.post("/", async (request, response) => {
   try {
     const token = request.headers.token;
-    const { userId, role } = jwt.verify(token, process.env.JWT_SECRET);
+    const { userId, isAdmin } = jwt.verify(token, process.env.JWT_SECRET);
 
-    if (!role) {
+    if (!isAdmin) {
       const error = new Error();
       error.message = "Unauthorized to create book!";
       throw error;
@@ -83,7 +83,13 @@ router.put("/:id", async (request, response) => {
     const token = request.headers.token;
     //console.log(token);
 
-    const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
+    const { userId, isAdmin } = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!isAdmin) {
+      const error = new Error();
+      error.message = "Unauthorized to create book!";
+      throw error;
+    }
     //console.log(userId);
 
     const user = await User.findById(userId);
@@ -125,7 +131,13 @@ router.delete("/:id", async (request, response) => {
     const { id } = request.params;
 
     const token = request.headers.token;
-    const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
+    const { userId, isAdmin } = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!isAdmin) {
+      const error = new Error();
+      error.message = "Only admins can create book!";
+      throw error;
+    }
 
     const book = await Book.findById(id);
     // console.log(book.createdBy.toString());
@@ -134,7 +146,7 @@ router.delete("/:id", async (request, response) => {
       console.log("Book deleted!");
     } else {
       const error = new Error();
-      error.message = "Unauthorized to delete book!";
+      error.message = "You can only delete books that you've created!";
       throw error;
     }
     return response.status(200).send({ message: "Book deleted successfully" });
