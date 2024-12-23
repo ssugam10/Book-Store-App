@@ -78,7 +78,14 @@ const Home = () => {
   const [showType, setShowType] = useState("table");
   const navigate = useNavigate();
 
-  const { isAdmin } = JSON.parse(localStorage.getItem("token"));
+  if (!localStorage.getItem("token")) {
+    localStorage.setItem(
+      "token",
+      JSON.stringify({ token: "0", isAdmin: false })
+    );
+  }
+
+  const isAdmin = JSON.parse(localStorage.getItem("token")).isAdmin;
 
   useEffect(() => {
     setLoading(true);
