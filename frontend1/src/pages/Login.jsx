@@ -29,7 +29,13 @@ const Login = () => {
       setLoading(false);
 
       if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem(
+          "token",
+          JSON.stringify({
+            token: response.data.token,
+            isAdmin: response.data.isAdmin,
+          })
+        );
         enqueueSnackbar("Login successful!", { variant: "success" });
         navigate("/Home"); // Adjust the route as needed
       }
@@ -74,7 +80,7 @@ const Login = () => {
           {loading ? "Logging in..." : "Login"}
         </button>
 
-{/* signup option */}
+        {/* signup option */}
         <div className="text-center mt-4">
           <p className="text-sm">
             Create a account?{" "}
@@ -86,7 +92,6 @@ const Login = () => {
             </span>
           </p>
         </div>
-
       </form>
     </div>
   );

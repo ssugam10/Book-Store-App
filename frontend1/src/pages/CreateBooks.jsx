@@ -30,7 +30,7 @@ const CreateBooks = () => {
     axios
       .post("http://localhost:5555/books", data, {
         headers: {
-          token: localStorage.getItem("token"),
+          token: JSON.parse(localStorage.getItem("token")).token,
         },
       })
       .then(() => {

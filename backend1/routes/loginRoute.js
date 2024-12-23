@@ -39,7 +39,9 @@ router.post("/", async (req, res) => {
     );
 
     // Send success response
-    res.status(200).json({ message: "Login successful", token });
+    res
+      .status(200)
+      .json({ message: "Login successful", token, isAdmin: user.isAdmin });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Error logging in" });

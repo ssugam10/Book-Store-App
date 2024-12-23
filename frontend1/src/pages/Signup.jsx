@@ -101,7 +101,7 @@ const Signup = () => {
           {loading ? "Signing up..." : "Sign Up"}
         </button>
 
-{/* // login option */}
+        {/* // login option */}
         <div className="text-center mt-4">
           <p className="text-sm">
             Already a user?{" "}
@@ -113,7 +113,6 @@ const Signup = () => {
             </span>
           </p>
         </div>
-
       </form>
     </div>
   );

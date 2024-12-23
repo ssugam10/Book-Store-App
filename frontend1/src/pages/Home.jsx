@@ -78,6 +78,8 @@ const Home = () => {
   const [showType, setShowType] = useState("table");
   const navigate = useNavigate();
 
+  const { isAdmin } = JSON.parse(localStorage.getItem("token"));
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -126,18 +128,17 @@ const Home = () => {
 
       <div className="flex justify-between items-center">
         <h1 className="text-3xl my-8">Books List</h1>
-        <Link to="/books/create">
-          <MdOutlineAddBox className="text-sky-800 text-4xl" />
-        </Link>
+
+        {isAdmin ? (
+          <Link to="/books/create">
+            <MdOutlineAddBox className="text-sky-800 text-4xl" />
+          </Link>
+        ) : (
+          <></>
+        )}
       </div>
 
-      {loading ? (
-        <Spinner />
-      ) : showType === "table" ? (
-        <BooksTable books={books} />
-      ) : (
-        <BooksCard books={books} />
-      )}
+      {loading ? <Spinner /> : <BooksTable books={books} />}
     </div>
   );
 };

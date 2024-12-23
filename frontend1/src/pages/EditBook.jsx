@@ -42,7 +42,7 @@ const EditBook = () => {
 
   // frontend me kya horha hai
   const handleEditBook = () => {
-    const token = localStorage.getItem("token");
+    const token = JSON.parse(localStorage.getItem("token")).token;
     console.log(token);
 
     const data = {
