@@ -56,20 +56,13 @@ const Landing = () => {
             >
               Signup
             </button>
-
-            <button
-              className="py-2 px-4 bg-gray-200 text-sky-600 rounded hover:bg-gray-300"
-              onClick={() => navigate("/Home")}
-            >
-              Homepage
-            </button>
           </div>
         </div>
       </div>
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-4 text-center">
-        <p>&copy; 2024 BookManager. All rights reserved.</p>
+        <p>&copy; 2025 BookManager. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -53,8 +53,8 @@ const ShowBook = () => {
             <span>{book.genre}</span>
           </div>
           <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Price</span>
-            <span>{book.price}</span>
+            <span className='text-xl mr-4 text-gray-500'>Quantity</span>
+            <span>{book.quantity}</span>
           </div>
           <div className='my-4'>
             <span className='text-xl mr-4 text-gray-500'>Description</span>

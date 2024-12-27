@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: 0,
     },
+    bookborrow:{
+      type: Array,
+      default:[]
+    }
   },
   { timestamp: true }
 );

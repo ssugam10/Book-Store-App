@@ -8,7 +8,7 @@ import DeleteBook from "./pages/DeleteBook";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Landing from "./pages/Landing";
-
+import BorrowedBook from './pages/UserBorrowedBooks'
 const App = () => {
   return (
     <Routes>
@@ -21,7 +21,7 @@ const App = () => {
       <Route path="/signup" element={<Signup />} />
       <Route path='/Showbook' element={<ShowBook/>}/>
       <Route path="/Home" element={<Home/>}/>
-
+      <Route path="borrowedbook/:id" element={<BorrowedBook/>}/>
     </Routes>
   );
 };

@@ -1,19 +1,74 @@
-//made chnages-for genre and price
-import { Link, Navigate } from "react-router-dom";
+import { useId, useState,useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
+import { useSnackbar } from "notistack";
+import axios from "axios";
 
 const BooksTable = ({ books }) => {
-  const { token, isAdmin } = JSON.parse(localStorage.getItem("token"));
+  const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState(null);
 
-  const handleBorrow = () => {
-    console.log(
-      "Nandini please implement this!, You need to add qty in books in backend, create route for borrowing books and returning appropriate message when the qty of book is zero, if a book is borrowed by a user then it should reflect in the user also, it means you need to change user model also, please create a meaningful route like /borrow/:id where id is the id of the book to be borrowed"
-    );
+
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { token, isAdmin } = JSON.parse(localStorage.getItem("token"));
+  useEffect(() => {
+    // Get the userId from the backend
+    axios
+      .get("http://localhost:5555/some-secure-route", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setUserId(response.data.userId); // Save the userId from the backend response
+      })
+      .catch((error) => {
+        console.error("Error fetching userId", error);
+      });
+  }, [token]);
+  
+  
+ 
+  const handleBorrow = (id) => {
+    setLoading(true);
+    axios
+      .post(`http://localhost:5555/borrow/${id}`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        setLoading(false);
+        enqueueSnackbar("Book borrowed successfully", { variant: "success" });
+        navigate("/Home");
+      })
+      .catch((error) => {
+        setLoading(false);
+        enqueueSnackbar(error?.response?.data?.message || "Error", {
+          variant: "error",
+        });
+      });
   };
 
   return (
+    <div>
+
+    {/* Conditionally render My Books button only for regular users */}
+    {!isAdmin && (
+      <div className="flex justify-end mb-4">
+        <Link to={`/borrowedbooks/${userId}`}>
+          <button className="bg-blue-500 text-white py-2 px-4 rounded-md">
+            My Books
+          </button>
+        </Link>
+      </div>
+    )}
+
+    {/* now the table for two diff positions-user/admin */}
     <table className="w-full border-separate border-spacing-2">
       <thead>
         <tr>
@@ -29,7 +84,7 @@ const BooksTable = ({ books }) => {
             Genre
           </th>
           <th className="border border-slate-600 rounded-md max-md:hidden">
-            price
+            Quantity
           </th>
           <th className="border border-slate-600 rounded-md">Operations</th>
         </tr>
@@ -53,7 +108,7 @@ const BooksTable = ({ books }) => {
               {book.genre}
             </td>
             <td className="border border-slate-700 rounded-md text-center max-md:hidden">
-              {book.price}
+              {book.quantity}
             </td>
             {isAdmin ? (
               <td className="border border-slate-700 rounded-md text-center">
@@ -71,8 +126,14 @@ const BooksTable = ({ books }) => {
               </td>
             ) : (
               <td>
-                <div className="bg-amber-950 text-center py-px text-orange-700 border-4 border-indigo-800 rounded-md">
-                  <button onClick={handleBorrow}>Borrow</button>
+              
+                <div className="bg-blue-400 text-center py-px text-orange-700 border-4 border-indigo-800 rounded-md">
+                  <button
+                    onClick={() => handleBorrow(book._id)}
+                    disabled={loading}
+                  >
+                    {loading ? "Borrowing..." : "Borrow"}
+                  </button>
                 </div>
               </td>
             )}
@@ -80,6 +141,7 @@ const BooksTable = ({ books }) => {
         ))}
       </tbody>
     </table>
+    </div>
   );
 };
 

@@ -10,7 +10,7 @@ const CreateBooks = () => {
   const [author, setAuthor] = useState("");
   const [publishYear, setPublishYear] = useState("");
   const [genre, setGenre] = useState("");
-  const [price, setPrice] = useState(0);
+  const [quantity, setQuantity] = useState(0);
   const [description, setDescription] = useState("");
 
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ const CreateBooks = () => {
       author,
       publishYear,
       genre,
-      price,
+      quantity,
       description,
     };
     setLoading(true);
@@ -105,8 +105,8 @@ const CreateBooks = () => {
           <label className="text-xl mr-4 text-gray-500">Price</label>
           <input
             type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
             className="border-2 border-gray-500 px-4 py-2  w-full "
           />
         </div>

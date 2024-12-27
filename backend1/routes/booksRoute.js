@@ -23,7 +23,7 @@ router.post("/", async (request, response) => {
       !request.body.author ||
       !request.body.publishYear ||
       !request.body.genre ||
-      !request.body.price
+      !request.body.quantity
     ) {
       return response.status(400).send({
         message:
@@ -36,7 +36,7 @@ router.post("/", async (request, response) => {
       publishYear: request.body.publishYear,
       createdBy: new mongoose.Types.ObjectId(userId),
       genre: request.body.genre,
-      price: request.body.price,
+      price: request.body.quantity,
     };
 
     const book = await Book.create(newBook);
@@ -102,11 +102,11 @@ router.put("/:id", async (request, response) => {
       !request.body.author ||
       !request.body.publishYear ||
       !request.body.genre ||
-      !request.body.price
+      !request.body.quantity
     ) {
       return response.status(400).send({
         message:
-          "Send all required fields: title, author, publishYear,genre and price",
+          "Send all required fields: title, author, publishYear,genre and quantity",
       });
     }
 
