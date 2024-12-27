@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
     //console.log(borrowedBooks);
 
     const books = await Book.find({ _id: { $in: borrowedBooks } });
-    console.log(books);
+    //console.log(books);
 
     res.status(200).json(books);
   } catch (error) {}

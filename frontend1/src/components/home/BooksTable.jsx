@@ -1,4 +1,4 @@
-import { useId, useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
@@ -6,9 +6,8 @@ import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
 import { useSnackbar } from "notistack";
 import axios from "axios";
 
-const BooksTable = ({ books }) => {
+const BooksTable = ({ books, setBooks }) => {
   const [loading, setLoading] = useState(false);
-  const [userId, setUserId] = useState(null);
 
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -28,7 +27,13 @@ const BooksTable = ({ books }) => {
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Book borrowed successfully", { variant: "success" });
-        navigate("/Home");
+
+        // Update the book quantity in the state
+        setBooks((prevBooks) =>
+          prevBooks.map((book) =>
+            book._id === id ? { ...book, quantity: book.quantity - 1 } : book
+          )
+        );
       })
       .catch((error) => {
         setLoading(false);
@@ -51,7 +56,7 @@ const BooksTable = ({ books }) => {
         </div>
       )}
 
-      {/* now the table for two diff positions-user/admin */}
+      {/* Table for displaying books */}
       <table className="w-full border-separate border-spacing-2">
         <thead>
           <tr>
@@ -112,7 +117,7 @@ const BooksTable = ({ books }) => {
                   <div className="bg-blue-400 text-center py-px text-orange-700 border-4 border-indigo-800 rounded-md">
                     <button
                       onClick={() => handleBorrow(book._id)}
-                      disabled={loading}
+                      disabled={loading || book.quantity <= 0}
                     >
                       {loading ? "Borrowing..." : "Borrow"}
                     </button>

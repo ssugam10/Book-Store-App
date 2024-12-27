@@ -5,27 +5,17 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-// Middleware to authenticate the user
-const authenticateUser = async (request, response, next) => {
+// Route to return a book by ID
+router.post("/:id", async (request, response) => {
   try {
     const token = request.headers.authorization?.split(" ")[1];
-    if (!token) {
-      return response.status(401).send({ message: "Authorization token missing" });
-    }
+    //console.log(token);
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    request.userId = decoded.id; // Attach the user ID to the request object
-    next();
-  } catch (error) {
-    return response.status(401).send({ message: "Invalid or expired token" });
-  }
-};
-
-// Route to return a book by ID
-router.post("/:id", authenticateUser, async (request, response) => {
-  try {
     const { id } = request.params; // Book ID
-    const userId = request.userId; // Authenticated User ID
+    //console.log(id);
+
+    const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
+    //console.log(userId);
 
     // Find the book by ID
     const book = await Book.findById(id);
@@ -39,14 +29,8 @@ router.post("/:id", authenticateUser, async (request, response) => {
       return response.status(404).send({ message: "User not found" });
     }
 
-    // Check if the user has borrowed the book
-    const bookborrow = user.bookborrow.indexOf(id);
-    if (borrowedIndex === -1) {
-      return response.status(400).send({ message: "Book not borrowed by the user" });
-    }
-
-    // Remove the book ID from the borrowedBooks array
-    user.bookborrow.splice(borrowedIndex, 1);
+    const idx = user.booksBorrowed.indexOf(id);
+    user.booksBorrowed.splice(idx, 1);
 
     // Increment the book quantity
     book.quantity += 1;
@@ -57,11 +41,6 @@ router.post("/:id", authenticateUser, async (request, response) => {
 
     return response.status(200).send({
       message: "Book returned successfully",
-      book: {
-        id: book._id,
-        title: book.title,
-        quantity: book.quantity,
-      },
     });
   } catch (error) {
     console.error(error.message);

@@ -82,7 +82,7 @@ const Home = () => {
         )}
       </div>
 
-      {loading ? <Spinner /> : <BooksTable books={books} />}
+      {loading ? <Spinner /> : <BooksTable books={books} setBooks={setBooks} />}
     </div>
   );
 };
