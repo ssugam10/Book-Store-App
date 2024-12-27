@@ -8,20 +8,20 @@ import DeleteBook from "./pages/DeleteBook";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Landing from "./pages/Landing";
-import BorrowedBook from './pages/UserBorrowedBooks'
+import BorrowedBook from "./pages/UserBorrowedBooks";
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Landing/>} />
+      <Route path="/" element={<Landing />} />
       <Route path="/books/create" element={<CreateBook />} />
       <Route path="/books/details/:id" element={<ShowBook />} />
       <Route path="/books/edit/:id" element={<EditBook />} />
       <Route path="/books/delete/:id" element={<DeleteBook />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path='/Showbook' element={<ShowBook/>}/>
-      <Route path="/Home" element={<Home/>}/>
-      <Route path="borrowedbook/:id" element={<BorrowedBook/>}/>
+      <Route path="/Showbook" element={<ShowBook />} />
+      <Route path="/Home" element={<Home />} />
+      <Route path="/borrowedBook" element={<BorrowedBook />} />
     </Routes>
   );
 };

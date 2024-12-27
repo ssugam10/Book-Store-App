@@ -18,10 +18,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: 0,
     },
-    bookborrow:{
-      type: Array,
-      default:[]
-    }
+    booksBorrowed: {
+      type: [{ type: mongoose.Schema.ObjectId, ref: "book" }],
+      default: [],
+    },
   },
   { timestamp: true }
 );

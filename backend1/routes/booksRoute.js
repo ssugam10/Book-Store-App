@@ -12,6 +12,8 @@ router.post("/", async (request, response) => {
     const token = request.headers.token;
     const { userId, isAdmin } = jwt.verify(token, process.env.JWT_SECRET);
 
+    console.log(request.headers);
+
     if (!isAdmin) {
       const error = new Error();
       error.message = "Unauthorized to create book!";
@@ -36,7 +38,7 @@ router.post("/", async (request, response) => {
       publishYear: request.body.publishYear,
       createdBy: new mongoose.Types.ObjectId(userId),
       genre: request.body.genre,
-      price: request.body.quantity,
+      quantity: request.body.quantity,
     };
 
     const book = await Book.create(newBook);

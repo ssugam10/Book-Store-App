@@ -2,30 +2,18 @@ import express from "express";
 import { Book } from "../models/bookModel.js";
 import { User } from "../models/user.js";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
-// Middleware to authenticate the user
-const authenticateUser = async (request, response, next) => {
+router.post("/:id", async (request, response) => {
   try {
     const token = request.headers.authorization?.split(" ")[1];
-    if (!token) {
-      return response.status(401).send({ message: "Authorization token missing" });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    request.userId = decoded.userId; // Attach the user ID to the request object
-    next();
-  } 
-  catch (error) {
-    return response.status(401).send({ message: "Invalid or expired token" });
-  }
-};
-
-router.post("/:id", authenticateUser, async (request, response) => {
-  try {
     const { id } = request.params; // Book ID
-    const userId = request.userId; // Authenticated User ID
+
+    const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
+    console.log("hereee", userId);
+    console.log(id);
 
     // Find the book by ID
     const book = await Book.findById(id);
@@ -35,7 +23,9 @@ router.post("/:id", authenticateUser, async (request, response) => {
 
     // Check if the book is available for borrowing
     if (book.quantity <= 0) {
-      return response.status(400).send({ message: "Book is currently unavailable" });
+      return response
+        .status(400)
+        .send({ message: "Book is currently unavailable" });
     }
 
     // Find the user by ID
@@ -46,21 +36,24 @@ router.post("/:id", authenticateUser, async (request, response) => {
     }
 
     // Check if the user has already borrowed the book
-    if (user.bookborrow.includes(id)) {
-      return response.status(400).send({ message: "Book already borrowed by the user" });
+    if (user.booksBorrowed.includes(new mongoose.Types.ObjectId(id))) {
+      return response
+        .status(400)
+        .send({ message: "Book already borrowed by the user" });
     }
 
     console.log("3");
 
-    const borrowedIndex = user.bookborrow.indexOf(id);
-    if (borrowedIndex !=-1) {
-
-      return response.status(400).send({ message: "User already taken one copy of book " });
+    const borrowedIndex = user.booksBorrowed.indexOf(id);
+    if (borrowedIndex != -1) {
+      return response
+        .status(400)
+        .send({ message: "User already taken one copy of book " });
     }
 
     // Update the book's quantity and user's borrowed books
     book.quantity -= 1;
-    user.bookborrow.push(id);
+    user.booksBorrowed.push(id);
 
     console.log("hello");
 
@@ -68,7 +61,6 @@ router.post("/:id", authenticateUser, async (request, response) => {
     await book.save();
     await user.save();
     console.log("4");
-
 
     return response.status(200).send({
       message: "Book borrowed successfully",
@@ -85,4 +77,3 @@ router.post("/:id", authenticateUser, async (request, response) => {
 });
 
 export default router;
-

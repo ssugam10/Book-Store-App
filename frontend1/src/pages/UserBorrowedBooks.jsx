@@ -7,29 +7,35 @@ import { useSnackbar } from "notistack";
 
 const UserBorrowedBooks = () => {
   const [loading, setLoading] = useState(false);
-  const [bookborrow, setBorrowedBooks] = useState([]);
-  const { id } = useParams(); // Getting the user ID from URL parameters
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
 
+  const { token, isAdmin } = JSON.parse(localStorage.getItem("token"));
+  console.log(token);
+  console.log(isAdmin);
+
+  console.log("my name is sugam");
   useEffect(() => {
-    setLoading(true);
+    console.log("yaarr");
+    //setLoading(true);
     // Fetch borrowed books for the user with the specified ID
     axios
-      .get(`http://localhost:5555/borrowedbook/${id}`, {
+      .get("http://localhost:5555/borrowedbook", {
         headers: {
           token: JSON.parse(localStorage.getItem("token")).token, // Including token for authentication
         },
       })
       .then((response) => {
-        setLoading(false);
-        setBorrowedBooks(response.data.books); // Store the list of borrowed books
+        //setLoading(false);
+        //console.log(response.data);
+        setBorrowedBooks(response.data); // Store the list of borrowed books
       })
       .catch((error) => {
-        setLoading(false);
+        //setLoading(false);
         enqueueSnackbar("Error fetching borrowed books", { variant: "error" });
         console.error(error);
       });
-  }, [id, enqueueSnackbar]);
+  },[]);
 
   return (
     <div className="p-4">
@@ -37,12 +43,12 @@ const UserBorrowedBooks = () => {
       <h1 className="text-3xl my-4">Books Borrowed by User</h1>
       {loading ? <Spinner /> : ""}
       <div className="flex flex-col items-center border-2 border-sky-400 rounded-xl w-[600px] p-8 mx-auto">
-        <h3 className="text-2xl mb-4">Borrowed Books by User {id}</h3>
-        {bookborrow.length === 0 ? (
+        {/* <h3 className="text-2xl mb-4">Borrowed Books by User {id}</h3> */}
+        {borrowedBooks.length === 0 ? (
           <p>No books borrowed by this user.</p>
         ) : (
           <ul className="w-full">
-            {bookborrow.map((book) => (
+            {borrowedBooks.map((book) => (
               <li
                 key={book._id}
                 className="flex flex-col items-start border-b-2 border-gray-300 py-4"

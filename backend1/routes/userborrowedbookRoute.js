@@ -1,22 +1,29 @@
-
+import { Book } from "../models/bookModel.js";
 import express from "express";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
+
 const router = express.Router();
 
-router.get("/:id", (req, res) => {
-    const userId = req.params.id;
-  
-    // Fetch borrowed books for the user from the database
-    Book.find({ borrowedBy: userId })
-      .then((books) => {
-        res.json({ books });
-      })
-      .catch((err) => {
-        res.status(500).json({ message: "Error fetching borrowed books" });
-      });
-  });
-    
-  export default router;
-  
+router.get("/", async (req, res) => {
+  try {
+    const token = req.headers.token;
+    //console.log(token);
+
+    const userId = jwt.verify(token, process.env.JWT_SECRET).userId;
+    //console.log(userId);
+
+    const user = await User.findById(userId);
+    //console.log(user);
+
+    const borrowedBooks = user.booksBorrowed;
+    //console.log(borrowedBooks);
+
+    const books = await Book.find({ _id: { $in: borrowedBooks } });
+    console.log(books);
+
+    res.status(200).json(books);
+  } catch (error) {}
+});
+
+export default router;
