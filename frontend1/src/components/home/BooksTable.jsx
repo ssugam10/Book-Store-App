@@ -60,7 +60,7 @@ const BooksTable = ({ books }) => {
     {/* Conditionally render My Books button only for regular users */}
     {!isAdmin && (
       <div className="flex justify-end mb-4">
-        <Link to={`/borrowedbooks/${userId}`}>
+        <Link to={`/borrowedbook/${userId}`}>
           <button className="bg-blue-500 text-white py-2 px-4 rounded-md">
             My Books
           </button>
