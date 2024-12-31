@@ -80,7 +80,7 @@ const UserBorrowedBooks = () => {
                   <strong>Author:</strong> {book.author}
                 </p>
                 <p className="text-sm text-gray-600 mb-2">
-                  <strong>Publish Date:</strong> {book.publishDate}
+                  <strong>Publish Date:</strong> {book.publishYear}
                 </p>
                 <p className="text-sm text-gray-600 mb-2">
                   <strong>Genre:</strong> {book.genre}
