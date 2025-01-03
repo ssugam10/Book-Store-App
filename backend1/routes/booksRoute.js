@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
 import mongoose from "mongoose";
 
+import { isAuth } from "../middleware/is-auth.js";
+
 const router = express.Router();
 
 // Route for Save a new Book
@@ -80,12 +82,10 @@ router.get("/:id", async (request, response) => {
 });
 
 // Route for Update a Book
-router.put("/:id", async (request, response) => {
+router.put("/:id", isAuth, async (request, response) => {
   try {
-    const token = request.headers.token;
-    //console.log(token);
-
-    const { userId, isAdmin } = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = request.userId;
+    const isAdmin = request.isAdmin;
 
     if (!isAdmin) {
       const error = new Error();

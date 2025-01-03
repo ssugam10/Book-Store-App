@@ -10,15 +10,15 @@ const EditBook = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publishYear, setPublishYear] = useState("");
-  const [genre,setGenre]=useState('');
-  const [quantity,setQuantity]=useState(0);
+  const [genre, setGenre] = useState("");
+  const [quantity, setQuantity] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [description,setDescription]=useState("");
+  const [description, setDescription] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
 
-  //backedn me kya horah hai 
+  //backedn me kya horah hai
   useEffect(() => {
     setLoading(true);
     axios
@@ -30,7 +30,7 @@ const EditBook = () => {
         setGenre(response.data.genre);
         setQuantity(response.data.quantity);
         setDescription(response.data.description);
-        
+
         setLoading(false);
       })
       .catch((error) => {
@@ -51,13 +51,13 @@ const EditBook = () => {
       publishYear,
       genre,
       quantity,
-      description
+      description,
     };
     setLoading(true);
     axios
       .put(`http://localhost:5555/books/${id}`, data, {
         headers: {
-          token: token,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then(() => {
@@ -134,7 +134,7 @@ const EditBook = () => {
             className="border-2 border-gray-500 px-4 py-2  w-full "
           />
         </div>
-        
+
         <button className="p-2 bg-sky-300 m-8" onClick={handleEditBook}>
           Save
         </button>
